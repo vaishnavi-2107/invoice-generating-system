@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app-shell">
+    <header class="topbar">
+        <div class="brand">
+            <div class="brand-mark">INV</div>
+            <div>
+                <h1>Invoice Dashboard</h1>
+                <p>Professional invoice tracking for your business.</p>
+            </div>
+        </div>
+        <div class="topbar-actions">
+            <span class="status-badge">Live</span>
+            <button id="clearAllBtn" type="button">Clear All</button>
+        </div>
+    </header>
+
+    <section class="summary-grid">
+        <article class="card accent-card">
+            <span>Total Invoices</span>
+            <strong id="totalInvoices">0</strong>
+        </article>
+        <article class="card">
+            <span>Total Revenue</span>
+            <strong id="totalRevenue">₹0</strong>
+        </article>
+        <article class="card">
+            <span>Pending Balance</span>
+            <strong id="totalBalance">₹0</strong>
+        </article>
+        <article class="card">
+            <span>Outstanding</span>
+            <strong id="pendingInvoices">0</strong>
+        </article>
+    </section>
+
+    <main class="workspace">
+        <section class="panel panel-form">
+            <div class="panel-header">
+                <div>
+                    <h2>Invoice Builder</h2>
+                    <p>Quickly add or update invoice records.</p>
+                </div>
+                <span class="panel-tag">Auto-generated ID</span>
+            </div>
+
+            <form id="invoiceForm" onsubmit="event.preventDefault(); saveInvoice();">
+                <input type="hidden" id="editIndex">
+
+                <div class="field-row">
+                    <label>Invoice #</label>
+                    <input type="text" id="invoiceNo" readonly>
+                </div>
+                <div class="field-row">
+                    <label>Estimate ID</label>
+                    <input type="text" id="estimateId" placeholder="EX-4521" required>
+                </div>
+                <div class="field-row">
+                    <label>Chain ID</label>
+                    <input type="text" id="chainId" placeholder="CH-1008" required>
+                </div>
+                <div class="field-row">
+                    <label>Service Description</label>
+                    <input type="text" id="serviceDetails" placeholder="Service details" required>
+                </div>
+                <div class="field-group">
+                    <div>
+                        <label>Quantity</label>
+                        <input type="number" id="qty" placeholder="0" min="1" required>
+                    </div>
+                    <div>
+                        <label>Cost / Unit</label>
+                        <input type="number" id="costPerQty" placeholder="₹0" min="0" step="0.01" required>
+                    </div>
+                </div>
+                <div class="field-group">
+                    <div>
+                        <label>Balance</label>
+                        <input type="number" id="balance" placeholder="₹0" min="0" step="0.01">
+                    </div>
+                    <div>
+                        <label>Customer Email</label>
+                        <input type="email" id="emailId" placeholder="client@example.com" required>
+                    </div>
+                </div>
+                <div class="field-group">
+                    <div>
+                        <label>Payment Date</label>
+                        <input type="datetime-local" id="paymentDate">
+                    </div>
+                    <div>
+                        <label>Service Date</label>
+                        <input type="date" id="serviceDate">
+                    </div>
+                </div>
+                <div class="field-row">
+                    <label>Delivery Notes</label>
+                    <input type="text" id="deliveryDetails" placeholder="Delivery or shipping details">
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="primary-btn">Save Invoice</button>
+                    <button type="button" class="secondary-btn" onclick="resetForm()">Reset</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="panel panel-table">
+            <div class="panel-header">
+                <div>
+                    <h2>Invoice Registry</h2>
+                    <p>Search, edit, and manage active invoices.</p>
+                </div>
+                <input type="text" id="searchBox" placeholder="Search invoices..." oninput="searchInvoice()">
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Invoice</th>
+                            <th>Estimate</th>
+                            <th>Chain</th>
+                            <th>Service</th>
+                            <th>Amount</th>
+                            <th>Balance</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="invoiceTable"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
